@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { IProduct } from '../shared/models/product';
 import { IBrand } from './../shared/models/brand';
 import { IPagination } from './../shared/models/pagination';
 import { IType } from './../shared/models/productType';
@@ -14,7 +15,7 @@ export class ShopService {
   baseUrl = 'https://localhost:5001/api';
   constructor(private http: HttpClient) {}
 
-  getProducts(shopParams: ShopParams) {
+  getProducts(shopParams: ShopParams): Observable<IPagination> {
     let params = new HttpParams();
 
     if (shopParams.brandId !== 0) {
@@ -43,6 +44,10 @@ export class ShopService {
           return response.body;
         })
       );
+  }
+
+  getProduct(id: number): Observable<IProduct> {
+    return this.http.get<IProduct>(this.baseUrl + '/products/' + id);
   }
 
   getBrands(): Observable<IBrand[]> {
