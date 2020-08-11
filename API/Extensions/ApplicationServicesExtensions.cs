@@ -12,6 +12,7 @@ namespace API.Extensions
         public static IServiceCollection AddApplicationServices(this IServiceCollection @this)
         {
             @this.AddScoped<IProductRepository, ProductRepository>();
+            @this.AddScoped<IBasketRepository, BasketRepository>();
             @this.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             @this.Configure<ApiBehaviorOptions>(options =>
