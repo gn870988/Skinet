@@ -1,6 +1,7 @@
 ﻿using API.Errors;
 using Core.Interfaces;
 using Infrastructure.Data;
+using Infrastructure.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace API.Extensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection @this)
         {
+            @this.AddScoped<ITokenService, TokenService>();
             @this.AddScoped<IProductRepository, ProductRepository>();
             @this.AddScoped<IBasketRepository, BasketRepository>();
             @this.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
