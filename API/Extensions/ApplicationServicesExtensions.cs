@@ -10,17 +10,18 @@ namespace API.Extensions
 {
     public static class ApplicationServicesExtensions
     {
-        public static IServiceCollection AddApplicationServices(this IServiceCollection @this)
+        public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
-            @this.AddScoped<ITokenService, TokenService>();
-            @this.AddScoped<IOrderService, OrderService>();
-            @this.AddScoped<IPaymentService, PaymentService>();
-            @this.AddScoped<IUnitOfWork, UnitOfWork>();
-            @this.AddScoped<IProductRepository, ProductRepository>();
-            @this.AddScoped<IBasketRepository, BasketRepository>();
-            @this.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddSingleton<IResponseCacheService, ResponseCacheService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IPaymentService, PaymentService>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IBasketRepository, BasketRepository>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
-            @this.Configure<ApiBehaviorOptions>(options =>
+            services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.InvalidModelStateResponseFactory = actionContext =>
                 {
@@ -38,7 +39,7 @@ namespace API.Extensions
                 };
             });
 
-            return @this;
+            return services;
         }
     }
 }
